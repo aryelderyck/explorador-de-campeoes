@@ -10,7 +10,7 @@ e guardar favoritos. Serve a dois fins: o Aryel **aprender** React e TypeScript 
 Deu certo quando:
 
 1. O site está publicado no GitHub Pages e cumpre o escopo da seção 2.
-2. O `docs/CHECKLIST-PRONTO.md` do nível 1 está marcado, com a evidência de cada item.
+2. Cada item do escopo foi conferido rodando o site e os testes, e o que não foi verificado está escrito no README.
 3. O Aryel consegue explicar, com as próprias palavras, qualquer arquivo e qualquer decisão do projeto.
 
 ## 2. Escopo
@@ -32,10 +32,10 @@ Skins, itens, runas, estatísticas por nível, outros idiomas, funcionamento sem
 
 | Assunto | Escolha |
 | --- | --- |
-| Kit `padroes-de-qualidade` | Versão 0.11, **nível 1**, **ritmo completo**, **modo essencial** |
+| Kit `padroes-de-qualidade` | Serve de **guarda-corpo**, não de lista obrigatória: vale o que protege este projeto (seção 13) |
 | Nomes no código | Domínio em português (`filtrarCampeoes`); termos técnicos em inglês (`props`, `fetch`) |
 | Onde o Aryel escreve | Na conversa; o Claude grava, roda e mostra a saída |
-| Tempo | Até 1 hora por dia; cerca de 25 sessões em 4 etapas (ver o plano) |
+| Tempo | Até 1 hora por dia; cerca de 24 sessões em 4 etapas (ver o plano) |
 | Dado real | Só em execução, vindo do Data Dragon. Repositório e testes têm só campeões **inventados** |
 
 ## 4. Stack e decisões
@@ -52,7 +52,7 @@ O motivo e as alternativas de cada linha ficam em `docs/DECISOES.md`.
 | Estado | Busca, filtro e comparação no endereço; favoritos em Context + `localStorage` | Tudo em `useState`; Redux |
 | Estilo | CSS Modules + um arquivo de variáveis | CSS global; Tailwind |
 | Testes | Vitest + Testing Library + jsdom, `fetch` trocado por dublê, axe | Jest; MSW |
-| Conferência | Prettier + ESLint + `tsc` + testes em `npm run conferir` (kit, seção 4A) | Sem linter |
+| Conferência | Prettier + ESLint + `tsc` + testes em `npm run conferir` | Sem linter; instalador e travas do kit |
 | Publicação | GitHub Actions para o GitHub Pages, só com o CI verde | Ramo `gh-pages`; Netlify |
 
 ## 5. Arquitetura
@@ -87,7 +87,7 @@ src/
                 TabelaEstatisticas, CartaoHabilidade, SeletorCampeao, TabelaComparacao, AvisoLegal
   estilos/      variáveis de cor e tamanho, base global
   testes/       fixtures com campeões inventados e a trava de rede
-docs/           DECISOES, MAPA-DE-ARQUIVOS, CHECKLIST-PRONTO, esta especificação e o plano
+docs/           DECISOES, MAPA-DE-ARQUIVOS, esta especificação e o plano
 ```
 
 Cada teste fica ao lado do arquivo que testa (`filtrarCampeoes.test.ts`).
@@ -166,7 +166,7 @@ sem quebrar o app; id repetido não duplica.
 - **Dado de fora é texto:** as marcações das descrições são removidas; nunca `dangerouslySetInnerHTML`. Teste com
   `<script>` e `<img onerror>` na fixture.
 - **Resposta validada** antes do uso; **nenhuma chave** existe no projeto.
-- **Dependências** conferidas no registro oficial antes de instalar; `npm audit` no CI.
+- **Dependências** conferidas no registro oficial antes de instalar.
 
 ## 9. Acessibilidade e visual
 
@@ -178,7 +178,7 @@ Tema escuro próprio, sem imitar o cliente do jogo e sem logos da Riot. Capturas
 
 TDD em toda lógica. Nenhum teste acessa a internet: uma trava faz qualquer `fetch` real falhar. Fixtures no formato
 do catálogo, com campeões inventados. Teste que passa de primeira é quebrado de propósito. axe nos testes de
-componente; Lighthouse em workflow separado, sem travar a publicação.
+componente; Lighthouse rodado à mão uma vez, no fim, com o número real anotado no README.
 
 ## 11. Política da Riot
 
@@ -200,19 +200,39 @@ Estilo de saída Professor do kit, mais o que o Aryel pediu para este projeto:
 - Erro ou tela em inglês: o Aryel diz primeiro o que entendeu.
 - Ao fechar cada tarefa: `APRENDIZADOS.md` com resumo, dificuldade e de 3 a 5 termos em inglês.
 
-## 13. Desvios do kit
+## 13. O que usamos do kit, e o que fica de fora
 
-| Regra do kit | Desvio | Motivo |
-| --- | --- | --- |
-| Sem JavaScript o conteúdo continua legível | Só um aviso em `<noscript>` | Aplicação React depende de JavaScript |
-| Seção 9A (busca do Google) | Não se aplica | Endereços com `#` e sem intenção de ser achado na busca |
-| Capturas guardadas no repositório | Ficam fora dele | Mostram arte da Riot |
-| Nenhum recurso de terceiros | Data Dragon liberado | É a fonte dos dados (seção 8) |
+Decisão do Aryel em 2026-11-13: o kit existe para o Claude não inventar nem afirmar sem provar. Não é para seguir
+inteiro. O que está fora do escopo deste projeto é ignorado.
+
+**Usamos**
+
+- Verificar antes de afirmar, e dizer o que não foi verificado.
+- TDD, testes sem internet e fixtures com campeões inventados.
+- Nenhum segredo nem dado real no repositório; dado de fora tratado como texto.
+- Capturas em 1440 px e 390 px antes de dizer que a tela ficou boa.
+- Conferir cada dependência no registro oficial antes de instalar.
+- Formatador e linter em um comando só (`npm run conferir`), que o CI também roda.
+- O jeito de ensinar (seção 12) e os documentos que o Aryel pediu: `CLAUDE.md`, `docs/DECISOES.md`,
+  `docs/MAPA-DE-ARQUIVOS.md` e `APRENDIZADOS.md`.
+
+**Fica de fora**
+
+| Item do kit | Por que não entra |
+| --- | --- |
+| Instalador, hooks do Claude Code, trava do commit e arquivos de `.claude/` | Muita configuração para um projeto simples; nunca rodaram em projeto real |
+| Revisão por subagente (`/conferir-codigo`) a cada tarefa | O Claude revisa o código do Aryel na própria conversa |
+| Checklist de pronto com evidência por item, cobertura mínima, Dependabot, CodeQL, `npm audit` no CI | Cerimônia de projeto maior |
+| Lighthouse no CI | Roda uma vez, à mão, no fim |
+| Seção 9A (busca do Google) e "legível sem JavaScript" | Aplicação React com `#` no endereço; só um aviso em `<noscript>` |
+| Registrar todo erro no `ERROS.md` do kit | Só o erro que claramente se repetiria em outro projeto |
+
+Outras escolhas conscientes: as capturas ficam fora do repositório, porque mostram arte da Riot; o Data Dragon é o
+único recurso de terceiros (seção 8).
 
 ## 14. Ainda não verificado
 
 - Registro no Developer Portal (seção 11).
 - Nota 95 de desempenho no Lighthouse com 173 imagens.
-- Modelos de Node do kit (CI, hooks, Dependabot) em um projeto real: este é o primeiro.
 - Se todo campeão tem exatamente quatro habilidades (um conferido).
 - Versões exatas de React, Vite e React Router, conferidas na instalação.
