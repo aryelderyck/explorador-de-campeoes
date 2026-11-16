@@ -30,30 +30,30 @@ Skins, itens, runas, estatísticas por nível, outros idiomas, funcionamento sem
 
 ## 3. Regras do projeto
 
-| Assunto | Escolha |
-| --- | --- |
+| Assunto                    | Escolha                                                                                         |
+| -------------------------- | ----------------------------------------------------------------------------------------------- |
 | Kit `padroes-de-qualidade` | Serve de **guarda-corpo**, não de lista obrigatória: vale o que protege este projeto (seção 13) |
-| Nomes no código | Domínio em português (`filtrarCampeoes`); termos técnicos em inglês (`props`, `fetch`) |
-| Onde o Aryel escreve | Na conversa; o Claude grava, roda e mostra a saída |
-| Tempo | Até 1 hora por dia; cerca de 22 sessões em 4 etapas (ver o plano) |
-| Dado real | Só em execução, vindo do Data Dragon. O repositório não guarda nenhum dado nem imagem da Riot |
+| Nomes no código            | Domínio em português (`filtrarCampeoes`); termos técnicos em inglês (`props`, `fetch`)          |
+| Onde o Aryel escreve       | Na conversa; o Claude grava, roda e mostra a saída                                              |
+| Tempo                      | Até 1 hora por dia; cerca de 22 sessões em 4 etapas (ver o plano)                               |
+| Dado real                  | Só em execução, vindo do Data Dragon. O repositório não guarda nenhum dado nem imagem da Riot   |
 
 ## 4. Stack e decisões
 
 O motivo e as alternativas de cada linha ficam em `docs/DECISOES.md`.
 
-| Assunto | Escolha | Alternativa principal descartada |
-| --- | --- | --- |
-| Montagem | Vite + React + TypeScript | Next.js (traz conceitos de servidor que o projeto não tem) |
-| Rotas | React Router com `HashRouter` | `BrowserRouter` com `404.html` (link direto responde 404 antes de funcionar) |
-| Busca de dados | `fetch` em `buscarJson`, com tempo limite de 10 s | TanStack Query (esconde o mecanismo que queremos aprender) |
-| Cache | `Map` em memória, por endereço | `localStorage` (risco de dado velho) |
-| Formato dos dados | Próprio, convertido e validado na entrada, à mão | Formato da Riot direto; biblioteca Zod |
-| Estado | Busca, filtro e comparação no endereço; favoritos em Context + `localStorage` | Tudo em `useState`; Redux |
-| Estilo | CSS Modules + um arquivo de variáveis | CSS global; Tailwind |
-| Testes | **Sem biblioteca de testes** (decisão de 2026-11-16). A lógica é conferida com exemplos de entrada e saída; as telas, rodando o site | Vitest + Testing Library (era o plano inicial) |
-| Conferência | Formatador + linter + `tsc` em `npm run conferir` | Sem linter; instalador e travas do kit |
-| Publicação | Um workflow mínimo do GitHub Actions: instalar, build e publicar no GitHub Pages | Ramo `gh-pages`; Netlify |
+| Assunto           | Escolha                                                                                                                              | Alternativa principal descartada                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Montagem          | Vite + React + TypeScript                                                                                                            | Next.js (traz conceitos de servidor que o projeto não tem)                   |
+| Rotas             | React Router com `HashRouter`                                                                                                        | `BrowserRouter` com `404.html` (link direto responde 404 antes de funcionar) |
+| Busca de dados    | `fetch` em `buscarJson`, com tempo limite de 10 s                                                                                    | TanStack Query (esconde o mecanismo que queremos aprender)                   |
+| Cache             | `Map` em memória, por endereço                                                                                                       | `localStorage` (risco de dado velho)                                         |
+| Formato dos dados | Próprio, convertido e validado na entrada, à mão                                                                                     | Formato da Riot direto; biblioteca Zod                                       |
+| Estado            | Busca, filtro e comparação no endereço; favoritos em Context + `localStorage`                                                        | Tudo em `useState`; Redux                                                    |
+| Estilo            | CSS Modules + um arquivo de variáveis                                                                                                | CSS global; Tailwind                                                         |
+| Testes            | **Sem biblioteca de testes** (decisão de 2026-11-16). A lógica é conferida com exemplos de entrada e saída; as telas, rodando o site | Vitest + Testing Library (era o plano inicial)                               |
+| Conferência       | Formatador + linter + `tsc` em `npm run conferir`                                                                                    | Sem linter; instalador e travas do kit                                       |
+| Publicação        | Um workflow mínimo do GitHub Actions: instalar, build e publicar no GitHub Pages                                                     | Ramo `gh-pages`; Netlify                                                     |
 
 ## 5. Arquitetura
 
@@ -89,15 +89,14 @@ src/
 docs/           DECISOES, MAPA-DE-ARQUIVOS, esta especificação e o plano
 ```
 
-
 ### Rotas
 
-| Endereço | Página |
-| --- | --- |
+| Endereço                        | Página                    |
+| ------------------------------- | ------------------------- |
 | `/#/` e `/#/?q=kai&funcao=Mage` | Lista, com busca e filtro |
-| `/#/campeao/:id` | Detalhe |
-| `/#/comparar?a=Ahri&b=Lux` | Comparação |
-| Qualquer outro | Página não encontrada |
+| `/#/campeao/:id`                | Detalhe                   |
+| `/#/comparar?a=Ahri&b=Lux`      | Comparação                |
+| Qualquer outro                  | Página não encontrada     |
 
 ## 6. Modelo de dados
 
@@ -125,7 +124,12 @@ type Campeao = {
   estatisticas: Estatisticas;
 };
 
-type Habilidade = { tecla: "P" | "Q" | "W" | "E" | "R"; nome: string; descricao: string; imagem: string };
+type Habilidade = {
+  tecla: "P" | "Q" | "W" | "E" | "R";
+  nome: string;
+  descricao: string;
+  imagem: string;
+};
 
 type CampeaoDetalhe = Campeao & { historia: string; habilidades: Habilidade[] };
 
@@ -147,13 +151,13 @@ sem quebrar o app; id repetido não duplica.
 
 **Erros e estados**
 
-| Situação | O que a pessoa vê |
-| --- | --- |
-| Carregando | Cartões-fantasma no tamanho final |
-| Sem rede ou mais de 10 s | Mensagem em português e botão "Tentar de novo" |
-| Resposta em formato inesperado | Mensagem própria, com o mesmo botão |
-| Campeão inexistente (a Riot responde 403) | "Campeão não encontrado" e link para a lista |
-| Busca sem resultado | "Nada encontrado" e botão para limpar |
+| Situação                                  | O que a pessoa vê                              |
+| ----------------------------------------- | ---------------------------------------------- |
+| Carregando                                | Cartões-fantasma no tamanho final              |
+| Sem rede ou mais de 10 s                  | Mensagem em português e botão "Tentar de novo" |
+| Resposta em formato inesperado            | Mensagem própria, com o mesmo botão            |
+| Campeão inexistente (a Riot responde 403) | "Campeão não encontrado" e link para a lista   |
+| Busca sem resultado                       | "Nada encontrado" e botão para limpar          |
 
 ## 8. Segurança e recursos de terceiros
 
@@ -222,14 +226,14 @@ inteiro. O que está fora do escopo deste projeto é ignorado.
 
 **Fica de fora**
 
-| Item do kit | Por que não entra |
-| --- | --- |
-| Instalador, hooks do Claude Code, trava do commit e arquivos de `.claude/` | Muita configuração para um projeto simples; nunca rodaram em projeto real |
-| Revisão por subagente (`/conferir-codigo`) a cada tarefa | O Claude revisa o código do Aryel na própria conversa |
-| Checklist de pronto com evidência por item, cobertura mínima, Dependabot, CodeQL, `npm audit` no CI | Cerimônia de projeto maior |
-| Lighthouse no CI | Roda uma vez, à mão, no fim |
-| Seção 9A (busca do Google) e "legível sem JavaScript" | Aplicação React com `#` no endereço; só um aviso em `<noscript>` |
-| Registrar todo erro no `ERROS.md` do kit | Só o erro que claramente se repetiria em outro projeto |
+| Item do kit                                                                                         | Por que não entra                                                         |
+| --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Instalador, hooks do Claude Code, trava do commit e arquivos de `.claude/`                          | Muita configuração para um projeto simples; nunca rodaram em projeto real |
+| Revisão por subagente (`/conferir-codigo`) a cada tarefa                                            | O Claude revisa o código do Aryel na própria conversa                     |
+| Checklist de pronto com evidência por item, cobertura mínima, Dependabot, CodeQL, `npm audit` no CI | Cerimônia de projeto maior                                                |
+| Lighthouse no CI                                                                                    | Roda uma vez, à mão, no fim                                               |
+| Seção 9A (busca do Google) e "legível sem JavaScript"                                               | Aplicação React com `#` no endereço; só um aviso em `<noscript>`          |
+| Registrar todo erro no `ERROS.md` do kit                                                            | Só o erro que claramente se repetiria em outro projeto                    |
 
 Outras escolhas conscientes: as capturas ficam fora do repositório, porque mostram arte da Riot; o Data Dragon é o
 único recurso de terceiros (seção 8).
