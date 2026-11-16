@@ -12,3 +12,14 @@ Arquivo que não dá para justificar não é criado.
 | `docs/MAPA-DE-ARQUIVOS.md` | Este arquivo: o porquê de cada arquivo | Junto dos outros documentos, em `docs/` | Comentário no topo de cada arquivo (JSON não aceita comentário) | 1 |
 | `docs/superpowers/specs/2026-11-13-explorador-de-campeoes-design.md` | Especificação: o que o projeto faz e como é desenhado | Pasta e nome com data seguem o fluxo de trabalho usado nos outros projetos do Aryel | `docs/ESPECIFICACAO.md` (mais curto, fora do padrão dos outros projetos) | Antes da 1 |
 | `docs/superpowers/plans/2026-11-13-explorador-de-campeoes.md` | Plano: as 24 tarefas, em ordem, e quem escreve cada uma | Mesmo motivo da especificação | `docs/PLANO.md`; issues do GitHub (boas para equipe, dispersas para estudo) | Antes da 1 |
+| `package.json` | Ficha do projeto: nome, comandos (`scripts`) e pacotes de que ele depende | O npm só o lê na raiz, com este nome | Nenhuma em projeto Node; `pnpm` e `yarn` usam o mesmo arquivo | 2 |
+| `package-lock.json` | Trava a versão exata de cada pacote instalado, para a instalação ser igual em toda máquina | Gerado pelo `npm install` ao lado do `package.json` | Não versionar (cada máquina instalaria versões diferentes) | 2 |
+| `.gitignore` | Lista o que o git não deve guardar: `node_modules`, `dist`, arquivos de editor | O git o lê na raiz, com este nome | Nenhuma: sem ele, 28 pacotes baixados iriam para o repositório | 2 |
+| `index.html` | A única página HTML: tem a `div` vazia onde o React desenha e chama o `main.tsx` | O Vite exige o ponto de entrada na raiz | Em `public/` (padrão de ferramentas antigas; o Vite não processaria) | 2 |
+| `vite.config.ts` | Configuração do Vite; hoje só liga o plugin que entende React | O Vite o procura na raiz, com este nome | Sem arquivo (o Vite não entenderia JSX) | 2 |
+| `tsconfig.json` | Índice que aponta para as duas configurações de TypeScript abaixo | O TypeScript o procura na raiz, com este nome | Um arquivo só (misturaria regras de navegador e de Node) | 2 |
+| `tsconfig.app.json` | Regras de TypeScript para o código do site (`src/`), que roda no navegador | Ao lado do índice que o cita | Ver `tsconfig.json` | 2 |
+| `tsconfig.node.json` | Regras de TypeScript para o `vite.config.ts`, que roda no Node | Ao lado do índice que o cita | Ver `tsconfig.json` | 2 |
+| `.oxlintrc.json` | Regras do linter oxlint, que o molde do Vite traz | O oxlint o procura na raiz, com este nome | ESLint (era o previsto no plano; decisão fica para a tarefa 3) | 2 |
+| `src/main.tsx` | Ponto de entrada do código: liga o React à `div` do `index.html` | `src/` guarda todo o código-fonte; `main` é o nome que o `index.html` chama | `index.tsx` (nome comum em outras ferramentas) | 2 |
+| `src/App.tsx` | Componente raiz: por enquanto, só o título do site | Ao lado do `main.tsx`, que o importa | Escrever tudo no `main.tsx` (misturaria ligação e conteúdo) | 2 |

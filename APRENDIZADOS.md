@@ -51,3 +51,28 @@ ligado à sessão do Claude. Não era falta de permissão na conta.
 | commit | registro | Um ponto salvo no histórico, com mensagem |
 | push | enviar | Mandar os commits da máquina para o GitHub |
 | pull request | pedido de integração | Pedido para juntar um ramo à `main`, com revisão |
+
+## Tarefa 2: criar o projeto com o Vite · 2026-11-16
+
+**O que foi feito:** cada pacote conferido no registro do npm antes de instalar; projeto React + TypeScript gerado
+pelo Vite; exemplo que vinha pronto removido; site rodando com o título e "Em construção".
+
+**O que aprendi**
+
+- O `package.json` é a ficha do projeto, e o `package-lock.json` trava as versões exatas.
+- O `index.html` tem uma `div` vazia; o `main.tsx` manda o React desenhar o componente `App` dentro dela.
+- Um componente é uma função que devolve JSX, que parece HTML mas é JavaScript.
+- `import` e `export` ligam um arquivo ao outro: o que um exporta, o outro importa.
+
+**Dificuldade que apareceu:** o molde do Vite mudou desde o plano: hoje traz o linter oxlint no lugar do ESLint.
+Plano é previsão; a ferramenta real é que manda, e a diferença fica registrada em "Desvios".
+
+**Termos em inglês**
+
+| Termo | Tradução | O que é |
+| --- | --- | --- |
+| dependency | dependência | Pacote de outra pessoa que o projeto usa |
+| scaffold | andaime, molde | Estrutura inicial gerada por uma ferramenta |
+| build | construção | Transformar o código-fonte nos arquivos finais que vão ao ar |
+| bundler | empacotador | Ferramenta que junta os arquivos em poucos (o Vite) |
+| strict mode | modo estrito | Conjunto de checagens mais rigorosas do TypeScript |

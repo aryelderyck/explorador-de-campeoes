@@ -100,3 +100,7 @@ No ar ao final: comparação lado a lado e o projeto conferido contra o escopo.
 - 2026-11-13: a especificação e o plano foram commitados antes da tarefa 1 e sem a linha no mapa de arquivos, para
   não se perderem no ambiente da nuvem. A tarefa 1 cria o mapa com essas linhas.
 - 2026-11-13: plano enxugado de 25 para 24 tarefas depois que o Aryel decidiu usar o kit só como guarda-corpo.
+- 2026-11-16 (tarefa 2): o molde atual do Vite traz o linter **oxlint**, e não o ESLint que o plano previa. Ficou o
+  que veio no molde; a escolha entre os dois é a primeira decisão da tarefa 3.
+- 2026-11-16 (tarefa 2): do molde do Vite, não entraram o `README.md` genérico, os ícones e logos (`public/`,
+  `src/assets/`) nem os dois arquivos de CSS de exemplo. O estilo próprio chega na tarefa 9.
