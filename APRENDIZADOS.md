@@ -101,3 +101,30 @@ mostrou que ele realmente confere.
 | script    | roteiro    | Apelido de um comando no `package.json`                  |
 | check     | conferir   | Modo que só avisa, sem alterar arquivos                  |
 | warning   | aviso      | Mensagem de algo suspeito, menos grave que um erro       |
+
+## Tarefa 4: aviso legal e publicação · 2026-11-16
+
+**O que foi feito:** componente `AvisoLegal`, que recebe o nome do projeto por props; endereço base do site; CSP
+inserida no build; workflow que publica no GitHub Pages a cada mudança na `main`.
+
+**O que aprendi**
+
+- Props são os valores que um componente recebe de quem o usa, como os argumentos de uma função.
+- `type` descreve o formato de um objeto; o TypeScript reclama se faltar uma prop ou se o tipo estiver errado.
+- `{valor}` dentro do JSX insere um valor de JavaScript no meio da marcação.
+- Um workflow é uma receita em YAML: quando rodar (`on`), o que pode fazer (`permissions`) e os passos (`steps`).
+- A CSP diz ao navegador de onde a página pode carregar coisas. Provado: chamada a outro site foi bloqueada, e a
+  chamada ao Data Dragon passou.
+
+**Dificuldade que apareceu:** a CSP não pode ficar fixa no `index.html`, porque quebraria o modo de desenvolvimento
+do Vite. Ela entra só no build.
+
+**Termos em inglês**
+
+| Termo      | Tradução            | O que é                                                                  |
+| ---------- | ------------------- | ------------------------------------------------------------------------ |
+| props      | propriedades        | Valores que um componente recebe                                         |
+| workflow   | fluxo de trabalho   | Receita automática do GitHub Actions                                     |
+| deploy     | publicar, implantar | Colocar o site no ar                                                     |
+| job / step | trabalho / passo    | Um workflow tem jobs; cada job tem passos em ordem                       |
+| artifact   | artefato            | Arquivo produzido por um passo e entregue a outro (aqui, a pasta `dist`) |

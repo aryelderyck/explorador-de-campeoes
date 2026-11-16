@@ -25,16 +25,16 @@ Especificação: [`../specs/2026-11-13-explorador-de-campeoes-design.md`](../spe
 
 No ar ao final: lista de campeões com imagens, versão do jogo e aviso legal.
 
-| Nº  | Tarefa                                                                                                                                   | Quem   | O que aparece de novo                                                           |
-| --- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------- |
-| 1   | ~~Preparar o repositório~~ **feita**                                                                                                     | Claude | git: clone, branch, commit, push, Pull Request; fim de linha LF                 |
-| 2   | ~~Criar o projeto com o Vite~~ **feita**                                                                                                 | Claude | npm, `package.json`, lockfile, `tsconfig`, `index.html`, `import`, primeiro JSX |
-| 3   | Formatador e linter: escolher o linter, instalar o Prettier, criar o script `conferir`. `CLAUDE.md` do projeto, mostrado antes de gravar | Claude | formatter, linter, script do npm                                                |
-| 4   | Componente `AvisoLegal` e publicação: workflow mínimo (instalar, build, publicar), `base` do Vite, CSP, GitHub Pages. Site no ar         | Claude | componente, props, YAML, job, step, deploy, CSP                                 |
-| 5   | Tipos do domínio e `converterCampeoes` com validação                                                                                     | Juntos | `type`, união, `unknown`, type guard, `Object.values`, `map`                    |
-| 6   | `enderecos`, `buscarJson` com tempo limite, cache e `carregarCampeoes`                                                                   | Claude | `async`/`await`, `Promise`, `try`/`catch`, `AbortController`, `Map`             |
-| 7   | `ListaPagina` e `CartaoCampeao`: carregar, mostrar carregando, erro e lista; versão no rodapé                                            | Claude | `useState`, `useEffect`, renderização condicional, `key`                        |
-| 8   | Estilo: variáveis do tema escuro, grade responsiva, imagens com tamanho reservado. Capturas e publicação                                 | Claude | CSS Modules, grid, media query                                                  |
+| Nº  | Tarefa                                                                                                   | Quem   | O que aparece de novo                                                           |
+| --- | -------------------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------- |
+| 1   | ~~Preparar o repositório~~ **feita**                                                                     | Claude | git: clone, branch, commit, push, Pull Request; fim de linha LF                 |
+| 2   | ~~Criar o projeto com o Vite~~ **feita**                                                                 | Claude | npm, `package.json`, lockfile, `tsconfig`, `index.html`, `import`, primeiro JSX |
+| 3   | ~~Formatador, linter e `CLAUDE.md`~~ **feita**                                                           | Claude | formatter, linter, script do npm                                                |
+| 4   | ~~Componente `AvisoLegal` e publicação~~ **feita**                                                       | Claude | componente, props, YAML, job, step, deploy, CSP                                 |
+| 5   | Tipos do domínio e `converterCampeoes` com validação                                                     | Juntos | `type`, união, `unknown`, type guard, `Object.values`, `map`                    |
+| 6   | `enderecos`, `buscarJson` com tempo limite, cache e `carregarCampeoes`                                   | Claude | `async`/`await`, `Promise`, `try`/`catch`, `AbortController`, `Map`             |
+| 7   | `ListaPagina` e `CartaoCampeao`: carregar, mostrar carregando, erro e lista; versão no rodapé            | Claude | `useState`, `useEffect`, renderização condicional, `key`                        |
+| 8   | Estilo: variáveis do tema escuro, grade responsiva, imagens com tamanho reservado. Capturas e publicação | Claude | CSS Modules, grid, media query                                                  |
 
 ## Etapa 2: Busca e filtro (tarefas 9 a 13)
 
