@@ -9,7 +9,7 @@ Especificação: [`../specs/2026-11-13-explorador-de-campeoes-design.md`](../spe
 - **Quem escreve:**
   - **Claude:** o Claude escreve e explica linha por linha.
   - **Juntos:** o Claude escreve e deixa um trecho de 5 a 15 linhas marcado `TODO(human)` para o Aryel.
-  - **Solo:** o Aryel escreve tudo. Recebe a ficha, os testes prontos e dicas em escada, uma por vez, quando pedir.
+  - **Solo:** o Aryel escreve tudo. Recebe a ficha, a tabela de exemplos e dicas em escada, uma por vez, quando pedir.
 - **Toda tarefa segue o mesmo roteiro:**
   1. O Claude diz em poucas palavras o que vai fazer.
   2. Cada arquivo novo é explicado antes de existir e ganha a sua linha no `docs/MAPA-DE-ARQUIVOS.md`.
