@@ -10,7 +10,7 @@ e guardar favoritos. Serve a dois fins: o Aryel **aprender** React e TypeScript 
 Deu certo quando:
 
 1. O site está publicado no GitHub Pages e cumpre o escopo da seção 2.
-2. Cada item do escopo foi conferido rodando o site e os testes, e o que não foi verificado está escrito no README.
+2. Cada item do escopo foi conferido rodando o site, e o que não foi verificado está escrito no README.
 3. O Aryel consegue explicar, com as próprias palavras, qualquer arquivo e qualquer decisão do projeto.
 
 ## 2. Escopo
@@ -30,30 +30,30 @@ Skins, itens, runas, estatísticas por nível, outros idiomas, funcionamento sem
 
 ## 3. Regras do projeto
 
-| Assunto | Escolha |
-| --- | --- |
+| Assunto                    | Escolha                                                                                         |
+| -------------------------- | ----------------------------------------------------------------------------------------------- |
 | Kit `padroes-de-qualidade` | Serve de **guarda-corpo**, não de lista obrigatória: vale o que protege este projeto (seção 13) |
-| Nomes no código | Domínio em português (`filtrarCampeoes`); termos técnicos em inglês (`props`, `fetch`) |
-| Onde o Aryel escreve | Na conversa; o Claude grava, roda e mostra a saída |
-| Tempo | Até 1 hora por dia; cerca de 24 sessões em 4 etapas (ver o plano) |
-| Dado real | Só em execução, vindo do Data Dragon. Repositório e testes têm só campeões **inventados** |
+| Nomes no código            | Domínio em português (`filtrarCampeoes`); termos técnicos em inglês (`props`, `fetch`)          |
+| Onde o Aryel escreve       | Na conversa; o Claude grava, roda e mostra a saída                                              |
+| Tempo                      | Até 1 hora por dia; cerca de 22 sessões em 4 etapas (ver o plano)                               |
+| Dado real                  | Só em execução, vindo do Data Dragon. O repositório não guarda nenhum dado nem imagem da Riot   |
 
 ## 4. Stack e decisões
 
 O motivo e as alternativas de cada linha ficam em `docs/DECISOES.md`.
 
-| Assunto | Escolha | Alternativa principal descartada |
-| --- | --- | --- |
-| Montagem | Vite + React + TypeScript | Next.js (traz conceitos de servidor que o projeto não tem) |
-| Rotas | React Router com `HashRouter` | `BrowserRouter` com `404.html` (link direto responde 404 antes de funcionar) |
-| Busca de dados | `fetch` em `buscarJson`, com tempo limite de 10 s | TanStack Query (esconde o mecanismo que queremos aprender) |
-| Cache | `Map` em memória, por endereço | `localStorage` (risco de dado velho) |
-| Formato dos dados | Próprio, convertido e validado na entrada, à mão | Formato da Riot direto; biblioteca Zod |
-| Estado | Busca, filtro e comparação no endereço; favoritos em Context + `localStorage` | Tudo em `useState`; Redux |
-| Estilo | CSS Modules + um arquivo de variáveis | CSS global; Tailwind |
-| Testes | Vitest + Testing Library + jsdom, `fetch` trocado por dublê, axe | Jest; MSW |
-| Conferência | Prettier + ESLint + `tsc` + testes em `npm run conferir` | Sem linter; instalador e travas do kit |
-| Publicação | GitHub Actions para o GitHub Pages, só com o CI verde | Ramo `gh-pages`; Netlify |
+| Assunto           | Escolha                                                                                                                              | Alternativa principal descartada                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Montagem          | Vite + React + TypeScript                                                                                                            | Next.js (traz conceitos de servidor que o projeto não tem)                   |
+| Rotas             | React Router com `HashRouter`                                                                                                        | `BrowserRouter` com `404.html` (link direto responde 404 antes de funcionar) |
+| Busca de dados    | `fetch` em `buscarJson`, com tempo limite de 10 s                                                                                    | TanStack Query (esconde o mecanismo que queremos aprender)                   |
+| Cache             | `Map` em memória, por endereço                                                                                                       | `localStorage` (risco de dado velho)                                         |
+| Formato dos dados | Próprio, convertido e validado na entrada, à mão                                                                                     | Formato da Riot direto; biblioteca Zod                                       |
+| Estado            | Busca, filtro e comparação no endereço; favoritos em Context + `localStorage`                                                        | Tudo em `useState`; Redux                                                    |
+| Estilo            | CSS Modules + um arquivo de variáveis                                                                                                | CSS global; Tailwind                                                         |
+| Testes            | **Sem biblioteca de testes** (decisão de 2026-11-16). A lógica é conferida com exemplos de entrada e saída; as telas, rodando o site | Vitest + Testing Library (era o plano inicial)                               |
+| Conferência       | Formatador + linter + `tsc` em `npm run conferir`                                                                                    | Sem linter; instalador e travas do kit                                       |
+| Publicação        | Um workflow mínimo do GitHub Actions: instalar, build e publicar no GitHub Pages                                                     | Ramo `gh-pages`; Netlify                                                     |
 
 ## 5. Arquitetura
 
@@ -86,20 +86,17 @@ src/
   componentes/  CartaoCampeao, CampoBusca, FiltroFuncao, EstadoDaTela, BotaoFavorito,
                 TabelaEstatisticas, CartaoHabilidade, SeletorCampeao, TabelaComparacao, AvisoLegal
   estilos/      variáveis de cor e tamanho, base global
-  testes/       fixtures com campeões inventados e a trava de rede
 docs/           DECISOES, MAPA-DE-ARQUIVOS, esta especificação e o plano
 ```
 
-Cada teste fica ao lado do arquivo que testa (`filtrarCampeoes.test.ts`).
-
 ### Rotas
 
-| Endereço | Página |
-| --- | --- |
+| Endereço                        | Página                    |
+| ------------------------------- | ------------------------- |
 | `/#/` e `/#/?q=kai&funcao=Mage` | Lista, com busca e filtro |
-| `/#/campeao/:id` | Detalhe |
-| `/#/comparar?a=Ahri&b=Lux` | Comparação |
-| Qualquer outro | Página não encontrada |
+| `/#/campeao/:id`                | Detalhe                   |
+| `/#/comparar?a=Ahri&b=Lux`      | Comparação                |
+| Qualquer outro                  | Página não encontrada     |
 
 ## 6. Modelo de dados
 
@@ -127,7 +124,12 @@ type Campeao = {
   estatisticas: Estatisticas;
 };
 
-type Habilidade = { tecla: "P" | "Q" | "W" | "E" | "R"; nome: string; descricao: string; imagem: string };
+type Habilidade = {
+  tecla: "P" | "Q" | "W" | "E" | "R";
+  nome: string;
+  descricao: string;
+  imagem: string;
+};
 
 type CampeaoDetalhe = Campeao & { historia: string; habilidades: Habilidade[] };
 
@@ -136,7 +138,7 @@ type FavoritosGuardados = { versao: 1; ids: string[] };
 
 A comparação usa as 8 estatísticas base, que já vêm na lista: a tela de comparar não faz chamada extra.
 
-## 7. Comportamentos que os testes cobram
+## 7. Comportamentos esperados
 
 **Busca e filtro (`filtrarCampeoes`)**: ignora maiúsculas, acentos e pontuação ("kaisa" acha "Kai'Sa"); busca vazia
 devolve todos; busca e função se combinam; campeão com duas funções aparece nas duas; a lista original não é alterada.
@@ -149,13 +151,13 @@ sem quebrar o app; id repetido não duplica.
 
 **Erros e estados**
 
-| Situação | O que a pessoa vê |
-| --- | --- |
-| Carregando | Cartões-fantasma no tamanho final |
-| Sem rede ou mais de 10 s | Mensagem em português e botão "Tentar de novo" |
-| Resposta em formato inesperado | Mensagem própria, com o mesmo botão |
-| Campeão inexistente (a Riot responde 403) | "Campeão não encontrado" e link para a lista |
-| Busca sem resultado | "Nada encontrado" e botão para limpar |
+| Situação                                  | O que a pessoa vê                              |
+| ----------------------------------------- | ---------------------------------------------- |
+| Carregando                                | Cartões-fantasma no tamanho final              |
+| Sem rede ou mais de 10 s                  | Mensagem em português e botão "Tentar de novo" |
+| Resposta em formato inesperado            | Mensagem própria, com o mesmo botão            |
+| Campeão inexistente (a Riot responde 403) | "Campeão não encontrado" e link para a lista   |
+| Busca sem resultado                       | "Nada encontrado" e botão para limpar          |
 
 ## 8. Segurança e recursos de terceiros
 
@@ -163,7 +165,7 @@ sem quebrar o app; id repetido não duplica.
   origem externa. Nenhum outro CDN, fonte externa ou analytics.
 - **CSP** em `<meta>` no `index.html`, liberando imagens e chamadas só para essa origem. Limitação: o GitHub Pages não
   permite cabeçalhos, e a CSP em `<meta>` cobre menos.
-- **Dado de fora é texto:** as marcações das descrições são removidas; nunca `dangerouslySetInnerHTML`. Teste com
+- **Dado de fora é texto:** as marcações das descrições são removidas; nunca `dangerouslySetInnerHTML`. Conferido com
   `<script>` e `<img onerror>` na fixture.
 - **Resposta validada** antes do uso; **nenhuma chave** existe no projeto.
 - **Dependências** conferidas no registro oficial antes de instalar.
@@ -174,11 +176,18 @@ Elementos semânticos, `lang="pt-BR"`, texto alternativo nas imagens, rótulo em
 mínimo de 4,5:1, alvos de toque de 44 px, `prefers-reduced-motion` respeitado, `width` e `height` em toda imagem.
 Tema escuro próprio, sem imitar o cliente do jogo e sem logos da Riot. Capturas em 1440 px e 390 px a cada tela.
 
-## 10. Testes
+## 10. Como conferimos, sem biblioteca de testes
 
-TDD em toda lógica. Nenhum teste acessa a internet: uma trava faz qualquer `fetch` real falhar. Fixtures no formato
-do catálogo, com campeões inventados. Teste que passa de primeira é quebrado de propósito. axe nos testes de
-componente; Lighthouse rodado à mão uma vez, no fim, com o número real anotado no README.
+Decisão do Aryel em 2026-11-16: o projeto não usa Vitest nem outra biblioteca de testes, e o CI é o menor possível.
+
+- **Tipos e estilo:** `npm run conferir` roda o formatador, o linter e o compilador do TypeScript.
+- **Lógica** (`filtrarCampeoes`, `compararCampeoes`, `limparDescricao`, conversão, favoritos): cada função tem uma
+  tabela de exemplos (entrada e saída esperada) na ficha da tarefa, conferida à mão ao rodar.
+- **Telas:** rodando o site, com capturas em 1440 px e 390 px, teclado e console sem erro.
+- **CI:** um workflow só, que instala, faz o build e publica. Se o build falhar, nada vai ao ar.
+
+O que se perde, de propósito: nenhuma conferência automática de comportamento. Uma mudança futura pode quebrar algo
+sem aviso, e o README dirá isso.
 
 ## 11. Política da Riot
 
@@ -196,7 +205,7 @@ Estilo de saída Professor do kit, mais o que o Aryel pediu para este projeto:
   infraestrutura (git, npm, CI, GitHub Pages). Depois, "mesmo padrão de X" e só o que for novo.
 - Antes de criar um arquivo: para que serve, por que naquela pasta, por que aquele nome, alternativas.
 - Uma tarefa pequena por vez. Ao final, 1 ou 2 perguntas para o Aryel explicar de volta. Só avança com o aval dele.
-- Tarefas **solo**: ficha, testes prontos e dicas em escada; a solução não é entregue.
+- Tarefas **solo**: ficha, tabela de exemplos (entrada e saída esperada) e dicas em escada; a solução não é entregue.
 - Erro ou tela em inglês: o Aryel diz primeiro o que entendeu.
 - Ao fechar cada tarefa: `APRENDIZADOS.md` com resumo, dificuldade e de 3 a 5 termos em inglês.
 
@@ -208,24 +217,23 @@ inteiro. O que está fora do escopo deste projeto é ignorado.
 **Usamos**
 
 - Verificar antes de afirmar, e dizer o que não foi verificado.
-- TDD, testes sem internet e fixtures com campeões inventados.
 - Nenhum segredo nem dado real no repositório; dado de fora tratado como texto.
 - Capturas em 1440 px e 390 px antes de dizer que a tela ficou boa.
 - Conferir cada dependência no registro oficial antes de instalar.
-- Formatador e linter em um comando só (`npm run conferir`), que o CI também roda.
+- Formatador, linter e tipos em um comando só (`npm run conferir`).
 - O jeito de ensinar (seção 12) e os documentos que o Aryel pediu: `CLAUDE.md`, `docs/DECISOES.md`,
   `docs/MAPA-DE-ARQUIVOS.md` e `APRENDIZADOS.md`.
 
 **Fica de fora**
 
-| Item do kit | Por que não entra |
-| --- | --- |
-| Instalador, hooks do Claude Code, trava do commit e arquivos de `.claude/` | Muita configuração para um projeto simples; nunca rodaram em projeto real |
-| Revisão por subagente (`/conferir-codigo`) a cada tarefa | O Claude revisa o código do Aryel na própria conversa |
-| Checklist de pronto com evidência por item, cobertura mínima, Dependabot, CodeQL, `npm audit` no CI | Cerimônia de projeto maior |
-| Lighthouse no CI | Roda uma vez, à mão, no fim |
-| Seção 9A (busca do Google) e "legível sem JavaScript" | Aplicação React com `#` no endereço; só um aviso em `<noscript>` |
-| Registrar todo erro no `ERROS.md` do kit | Só o erro que claramente se repetiria em outro projeto |
+| Item do kit                                                                                         | Por que não entra                                                         |
+| --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Instalador, hooks do Claude Code, trava do commit e arquivos de `.claude/`                          | Muita configuração para um projeto simples; nunca rodaram em projeto real |
+| Revisão por subagente (`/conferir-codigo`) a cada tarefa                                            | O Claude revisa o código do Aryel na própria conversa                     |
+| Checklist de pronto com evidência por item, cobertura mínima, Dependabot, CodeQL, `npm audit` no CI | Cerimônia de projeto maior                                                |
+| Lighthouse no CI                                                                                    | Roda uma vez, à mão, no fim                                               |
+| Seção 9A (busca do Google) e "legível sem JavaScript"                                               | Aplicação React com `#` no endereço; só um aviso em `<noscript>`          |
+| Registrar todo erro no `ERROS.md` do kit                                                            | Só o erro que claramente se repetiria em outro projeto                    |
 
 Outras escolhas conscientes: as capturas ficam fora do repositório, porque mostram arte da Riot; o Data Dragon é o
 único recurso de terceiros (seção 8).
