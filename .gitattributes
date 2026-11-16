@@ -1,0 +1,2 @@
+# Fim de linha igual em toda máquina (LF). Sem isto, Windows e Linux geram diferenças falsas no git.
+* text=auto eol=lf
