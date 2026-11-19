@@ -107,3 +107,7 @@ No ar ao final: comparação lado a lado e o projeto conferido contra o escopo.
 - 2026-11-16 (tarefa 3): ficou o oxlint, que veio no molde, no lugar do ESLint; Prettier sem arquivo de configuração.
 - 2026-11-16: prioridade declarada pelo Aryel: projeto muito bem apresentável. As tarefas de estilo (8, 16 e 21) e o
   README (22) recebem o cuidado que iria para os testes.
+- 2026-11-19 (tarefa 5): o arquivo `src/dados/enderecos.ts` nasceu aqui, e não na tarefa 6, porque o conversor
+  precisa do endereço do retrato. A tarefa 6 acrescenta os outros endereços ao mesmo arquivo.
+- 2026-11-19 (tarefa 5): a verificação da lógica foi um script de rascunho, fora do repositório, com campeões
+  inventados, rodado com o próprio Node. Não há arquivo de teste no projeto (decisão 16).
